@@ -8,8 +8,10 @@ public class HttpResponse {
 			URL requestURL = new URL(theURL);
 			// Use java.net.url class to validate the url
 			requestURL.toURI();
+			System.out.println("vvv");
 			return true;
 		} catch (Exception e) {
+			System.out.println("fff");
 			return false;
 		}
 	}

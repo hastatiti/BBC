@@ -51,29 +51,32 @@ public class HttpResponse {
 					map.put("Content_length", contentLength);
 					map.put("Date", date);
 					
-					printJSON(); // map in JSON format
+					printJSON("notError"); // map in JSON format
 				}else {
 					map.put("URL", theURL.trim());
 					map.put("Error", "invalid url");
 					
-					printJSON(); // map in JSON format
+					printJSON("error"); // map in JSON format
 				}
 		}catch(Exception e) {
 			map.put("URL", theURL.trim());
 			map.put("Error", "invalid url");
 			
-			printJSON(); // map in JSON format
+			printJSON("error"); // map in JSON format
 			}
 	}
 	
 	// Gson framework for representation-required pattern
 	// Create gson instance with GsonBuilder to have some additional configuration
-	public String printJSON() {
+	public String printJSON(String print) {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		// setPrettyPrinting()- to print line by line
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		String json = gson.toJson(map);
-		System.out.println(json);
+		if (print == "error") {
+			System.err.println(json); // errors written to stderr
+		} else
+			System.out.println(json); // output written to stdout
 		return json;
 	}
 	

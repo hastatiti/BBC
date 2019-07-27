@@ -15,11 +15,13 @@ public class HttpResponse {
 	
 	private Map<String, String> map = new LinkedHashMap<>();
 	
+	// Check validity of URLs
 	public boolean isValidURL(String theURL) {
 		try {
 			// Create a URL object from the String representation
 			URL requestURL = new URL(theURL);
 			// Use java.net.url class to validate the url
+			// check if not starts with http:// or https://, has characters not allowed in a url
 			requestURL.toURI();
 			return true;
 		} catch (Exception e) {
@@ -27,43 +29,48 @@ public class HttpResponse {
 		}
 	}
 
+	// Return a URLConnection instance, create connection with valid URLs, populate map, create and print JSON format
+	// For invalid URLs populate map without connection, create and print JSON format
 	public void getHttpResponse(String theURL) {
 		String url, statusCode, contentLength, date = null;
 		try {
 				if (isValidURL(theURL)) {
 					URL requestURL = new URL(theURL);
-					HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection();
-					url = conn.getURL().toString();
-					statusCode = Integer.toString(conn.getResponseCode());
-					contentLength = Integer.toString(conn.getContentLength());
-					long myDate = conn.getDate();
+					HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection(); //connection
+					url = conn.getURL().toString(); // URL
+					statusCode = Integer.toString(conn.getResponseCode()); // Status code
+					contentLength = Integer.toString(conn.getContentLength()); // Content length
+					long myDate = conn.getDate(); // Date
 					Date theDate = new Date(myDate);
 					DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z");
 					dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-					date = dateFormat.format(theDate);
+					date = dateFormat.format(theDate); // Formatted date
 					
 					map.put("URL", url);
 					map.put("Status_Code", statusCode);
 					map.put("Content_length", contentLength);
 					map.put("Date", date);
 					
-					printJSON();
+					printJSON(); // map in JSON format
 				}else {
 					map.put("URL", theURL.trim());
 					map.put("Error", "invalid url");
 					
-					printJSON();
+					printJSON(); // map in JSON format
 				}
 		}catch(Exception e) {
 			map.put("URL", theURL.trim());
 			map.put("Error", "invalid url");
 			
-			printJSON();
+			printJSON(); // map in JSON format
 			}
 	}
 	
+	// Gson framework for representation-required pattern
+	// Create gson instance with GsonBuilder to have some additional configuration
 	public String printJSON() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
+		// setPrettyPrinting()- to print line by line
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		String json = gson.toJson(map);
 		System.out.println(json);
@@ -71,6 +78,7 @@ public class HttpResponse {
 	}
 	
 	public static void main(String[] args) {
+		System.out.println("Please press ENTER after the input : ");
 		Scanner scanner = new Scanner(System.in);
 		String theURL = null;
 		while (scanner.hasNextLine()) {

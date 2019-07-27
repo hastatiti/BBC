@@ -1,3 +1,4 @@
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -8,19 +9,34 @@ public class HttpResponse {
 			URL requestURL = new URL(theURL);
 			// Use java.net.url class to validate the url
 			requestURL.toURI();
+			HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection();
 			System.out.println("vvv");
 			return true;
 		} catch (Exception e) {
-			System.out.println("fff");
+			System.out.println(theURL);
 			return false;
 		}
 	}
-public static void main(String[] args) {
-	Scanner scanner = new Scanner(System.in);
-	String theURL = null;
-	while (scanner.hasNextLine()) {
-		theURL = scanner.nextLine();
-		isValidURL(theURL);
+
+	private static void getHttpResponse(String theURL) {
+		String url, statusCode, contentLength, date = null;
+		try {
+			URL requestURL = new URL(theURL);
+			HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection();
+				if (isValidURL(theURL)) {
+					
+				}else System.out.println("not valid url");
+		}catch(Exception e) {
+			System.out.println("Errorrrrrr");
+			}
 	}
-}
+
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		String theURL = null;
+		while (scanner.hasNextLine()) {
+			theURL = scanner.nextLine();
+			getHttpResponse(theURL);
+		}
+	}
 }

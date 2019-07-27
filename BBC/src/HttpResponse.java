@@ -3,6 +3,8 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.TimeZone;
 
@@ -35,7 +37,13 @@ public class HttpResponse {
 					DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z");
 					dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 					date = dateFormat.format(theDate);
-					System.out.println("vvvvv");
+					
+					Map<String, String> map = new LinkedHashMap<>();
+					map.put("URL", url);
+					map.put("Status_Code", statusCode);
+					map.put("Content_length", contentLength);
+					map.put("Date", date);
+					
 				}else System.out.println("not valid url");
 		}catch(Exception e) {
 			System.out.println("Errorrrrrr");

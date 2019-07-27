@@ -12,6 +12,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class HttpResponse {
+	
+	private static Map<String, String> map = new LinkedHashMap<>();
+	
 	private static boolean isValidURL(String theURL) {
 		try {
 			// Create a URL object from the String representation
@@ -41,7 +44,7 @@ public class HttpResponse {
 					dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 					date = dateFormat.format(theDate);
 					
-					Map<String, String> map = new LinkedHashMap<>();
+					
 					map.put("URL", url);
 					map.put("Status_Code", statusCode);
 					map.put("Content_length", contentLength);
@@ -52,7 +55,6 @@ public class HttpResponse {
 					String json = gson.toJson(map);
 					System.out.println(json);
 				}else {
-					Map<String, String> map = new LinkedHashMap<>();
 					map.put("URL", theURL.trim());
 					map.put("Error", "invalid url");
 					

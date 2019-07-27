@@ -44,7 +44,6 @@ public class HttpResponse {
 					dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 					date = dateFormat.format(theDate);
 					
-					
 					map.put("URL", url);
 					map.put("Status_Code", statusCode);
 					map.put("Content_length", contentLength);
@@ -64,11 +63,13 @@ public class HttpResponse {
 			printJSON();
 			}
 	}
-	public void printJSON() {
+	
+	public String printJSON() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		String json = gson.toJson(map);
 		System.out.println(json);
+		return json;
 	}
 	
 	public static void main(String[] args) {

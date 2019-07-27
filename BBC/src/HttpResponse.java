@@ -1,6 +1,10 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 public class HttpResponse {
 	private static boolean isValidURL(String theURL) {
@@ -20,10 +24,17 @@ public class HttpResponse {
 	private static void getHttpResponse(String theURL) {
 		String url, statusCode, contentLength, date = null;
 		try {
-			URL requestURL = new URL(theURL);
-			HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection();
 				if (isValidURL(theURL)) {
-					System.out.println("vvvv");
+					URL requestURL = new URL(theURL);
+					HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection();
+					url = conn.getURL().toString();
+					statusCode = Integer.toString(conn.getResponseCode());
+					contentLength = Integer.toString(conn.getContentLength());
+					long myDate = conn.getDate();
+					Date theDate = new Date(myDate);
+					DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z");
+					dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+					date = dateFormat.format(theDate);
 				}else System.out.println("not valid url");
 		}catch(Exception e) {
 			System.out.println("Errorrrrrr");

@@ -10,10 +10,9 @@ public class HttpResponse {
 			// Use java.net.url class to validate the url
 			requestURL.toURI();
 			HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection();
-			System.out.println("vvv");
 			return true;
 		} catch (Exception e) {
-			System.out.println(theURL);
+	//		System.out.println(theURL);
 			return false;
 		}
 	}
@@ -24,7 +23,7 @@ public class HttpResponse {
 			URL requestURL = new URL(theURL);
 			HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection();
 				if (isValidURL(theURL)) {
-					
+					System.out.println("vvvv");
 				}else System.out.println("not valid url");
 		}catch(Exception e) {
 			System.out.println("Errorrrrrr");

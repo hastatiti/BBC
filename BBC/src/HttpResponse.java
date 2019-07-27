@@ -35,6 +35,7 @@ public class HttpResponse {
 					DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss z");
 					dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 					date = dateFormat.format(theDate);
+					System.out.println("vvvvv");
 				}else System.out.println("not valid url");
 		}catch(Exception e) {
 			System.out.println("Errorrrrrr");

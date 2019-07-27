@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TimeZone;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class HttpResponse {
 	private static boolean isValidURL(String theURL) {
 		try {
@@ -44,6 +47,10 @@ public class HttpResponse {
 					map.put("Content_length", contentLength);
 					map.put("Date", date);
 					
+					GsonBuilder gsonBuilder = new GsonBuilder();
+					Gson gson = gsonBuilder.setPrettyPrinting().create();
+					String json = gson.toJson(map);
+					System.out.println(json);
 				}else System.out.println("not valid url");
 		}catch(Exception e) {
 			System.out.println("Errorrrrrr");

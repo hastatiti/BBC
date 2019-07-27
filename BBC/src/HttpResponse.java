@@ -1,4 +1,5 @@
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import com.google.gson.GsonBuilder;
 public class HttpResponse {
 	
 	private Map<String, String> map = new LinkedHashMap<>();
+	private static int SERVER_TIMEOUT = 10000;
 	
 	// Check validity of URLs
 	public boolean isValidURL(String theURL) {
@@ -37,6 +39,10 @@ public class HttpResponse {
 				if (isValidURL(theURL)) {
 					URL requestURL = new URL(theURL);
 					HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection(); //connection
+					
+					// Handle unresponsive server
+					conn.setConnectTimeout(SERVER_TIMEOUT);
+					
 					url = conn.getURL().toString(); // URL
 					statusCode = Integer.toString(conn.getResponseCode()); // Status code
 					contentLength = Integer.toString(conn.getContentLength()); // Content length
@@ -58,7 +64,12 @@ public class HttpResponse {
 					
 					printJSON("error"); // map in JSON format
 				}
-		}catch(Exception e) {
+		}
+		// Server timeout
+		catch (SocketTimeoutException e) {
+		    System.err.println("Server not responsive for :" + SERVER_TIMEOUT + " seconds.");
+		}
+		catch(Exception e) {
 			map.put("Url", theURL.trim());
 			map.put("Error", "invalid url");
 			

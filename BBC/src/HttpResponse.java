@@ -13,9 +13,9 @@ import com.google.gson.GsonBuilder;
 
 public class HttpResponse {
 	
-	private static Map<String, String> map = new LinkedHashMap<>();
+	private Map<String, String> map = new LinkedHashMap<>();
 	
-	private static boolean isValidURL(String theURL) {
+	public boolean isValidURL(String theURL) {
 		try {
 			// Create a URL object from the String representation
 			URL requestURL = new URL(theURL);
@@ -29,7 +29,7 @@ public class HttpResponse {
 		}
 	}
 
-	private static void getHttpResponse(String theURL) {
+	public void getHttpResponse(String theURL) {
 		String url, statusCode, contentLength, date = null;
 		try {
 				if (isValidURL(theURL)) {
@@ -50,30 +50,34 @@ public class HttpResponse {
 					map.put("Content_length", contentLength);
 					map.put("Date", date);
 					
-					GsonBuilder gsonBuilder = new GsonBuilder();
-					Gson gson = gsonBuilder.setPrettyPrinting().create();
-					String json = gson.toJson(map);
-					System.out.println(json);
+					printJSON();
 				}else {
 					map.put("URL", theURL.trim());
 					map.put("Error", "invalid url");
 					
-					GsonBuilder gsonBuilder = new GsonBuilder();
-					Gson gson = gsonBuilder.setPrettyPrinting().create();
-					String json = gson.toJson(map);
-					System.out.println(json);
+					printJSON();
 				}
 		}catch(Exception e) {
-			System.out.println("Errorrrrrr");
+			map.put("URL", theURL.trim());
+			map.put("Error", "invalid url");
+			
+			printJSON();
 			}
 	}
-
+	public void printJSON() {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		Gson gson = gsonBuilder.setPrettyPrinting().create();
+		String json = gson.toJson(map);
+		System.out.println(json);
+	}
+	
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		String theURL = null;
 		while (scanner.hasNextLine()) {
 			theURL = scanner.nextLine();
-			getHttpResponse(theURL);
+			HttpResponse response = new HttpResponse();
+			response.getHttpResponse(theURL);
 		}
 	}
 }

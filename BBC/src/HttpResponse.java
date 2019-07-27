@@ -46,20 +46,20 @@ public class HttpResponse {
 					dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 					date = dateFormat.format(theDate); // Formatted date
 					
-					map.put("URL", url);
+					map.put("Url", url);
 					map.put("Status_Code", statusCode);
 					map.put("Content_length", contentLength);
 					map.put("Date", date);
 					
 					printJSON("notError"); // map in JSON format
 				}else {
-					map.put("URL", theURL.trim());
+					map.put("Url", theURL.trim());
 					map.put("Error", "invalid url");
 					
 					printJSON("error"); // map in JSON format
 				}
 		}catch(Exception e) {
-			map.put("URL", theURL.trim());
+			map.put("Url", theURL.trim());
 			map.put("Error", "invalid url");
 			
 			printJSON("error"); // map in JSON format

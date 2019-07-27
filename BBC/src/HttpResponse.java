@@ -51,7 +51,15 @@ public class HttpResponse {
 					Gson gson = gsonBuilder.setPrettyPrinting().create();
 					String json = gson.toJson(map);
 					System.out.println(json);
-				}else System.out.println("not valid url");
+				}else {
+					Map<String, String> map = new LinkedHashMap<>();
+					map.put("URL", theURL.trim());
+					map.put("Error", "invalid url");
+					GsonBuilder gsonBuilder = new GsonBuilder();
+					Gson gson = gsonBuilder.setPrettyPrinting().create();
+					String json = gson.toJson(map);
+					System.out.println(json);
+				}
 		}catch(Exception e) {
 			System.out.println("Errorrrrrr");
 			}

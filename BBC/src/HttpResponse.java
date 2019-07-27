@@ -21,10 +21,8 @@ public class HttpResponse {
 			URL requestURL = new URL(theURL);
 			// Use java.net.url class to validate the url
 			requestURL.toURI();
-			HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection();
 			return true;
 		} catch (Exception e) {
-	//		System.out.println(theURL);
 			return false;
 		}
 	}

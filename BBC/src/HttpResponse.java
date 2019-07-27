@@ -55,6 +55,7 @@ public class HttpResponse {
 					Map<String, String> map = new LinkedHashMap<>();
 					map.put("URL", theURL.trim());
 					map.put("Error", "invalid url");
+					
 					GsonBuilder gsonBuilder = new GsonBuilder();
 					Gson gson = gsonBuilder.setPrettyPrinting().create();
 					String json = gson.toJson(map);

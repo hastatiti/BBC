@@ -87,7 +87,7 @@ public class HttpResponse {
 					statusCodeMap.put(statusCode, counter); // End of statusCodeMap
 
 					
-					printJSON("notError"); // map in JSON format
+					printJSON("notError"); // main map in JSON format
 				}else {
 					map.put("Url", theURL.trim());
 					map.put("Error", "invalid url");
@@ -122,7 +122,8 @@ public class HttpResponse {
 		return json;
 	}
 
-	// statusCodeMap in form of {301,1},
+	// statusCodeMap in form of {301,1},{200,2}
+	// sortedStatusCodeMap sorts above map by value {200,2},{301,1}
 	// finalStatusCodeMap is in form of {Status_code : 301, Number_of_responses : 1}
 	public Map<String, Integer> getFinalStatusCodeMap() {
 		sortedStatusCodeMap = sortByValue(statusCodeMap);

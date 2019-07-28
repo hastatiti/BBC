@@ -24,7 +24,7 @@ public class HttpResponse implements HttpResponseService {
 	private Map<String,Integer> sortedStatusCodeMap = new LinkedHashMap<>(); // sort above map by value 
 	private Map<String,Integer> finalStatusCodeMap = new LinkedHashMap<>(); // get key value from above map, {Status_code : 200, Number_of_responses : 3} ...
 	
-	// Starting point of the program
+	/* Starting point of the program*/
 	@Override
 	public void start() { 
 		System.out.println("Please press ENTER after the input : ");
@@ -39,14 +39,14 @@ public class HttpResponse implements HttpResponseService {
 		}
 	}
 	
-	// Check validity of URLs
+	/* Check validity of URLs*/
 	@Override
 	public boolean isValidURL(String theURL) {
 		try {
-			// Create a URL object from the String representation
+			/* Create a URL object from the String representation*/
 			URL requestURL = new URL(theURL);
-			// Use java.net.url class to validate the url
-			// check if not starts with http:// or https://, has characters not allowed in a url
+			/*Use java.net.url class to validate the url
+			check if not starts with http:// or https://, has characters not allowed in a url*/
 			requestURL.toURI();
 			return true;
 		} catch (Exception e) {
@@ -54,8 +54,8 @@ public class HttpResponse implements HttpResponseService {
 		}
 	}
 
-	// Return a URLConnection instance, create connection with valid URLs, populate map, create and print JSON format
-	// For invalid URLs populate map without connection, create and print JSON error format
+	/* Return a URLConnection instance, create connection with valid URLs, populate map, create and print JSON format
+	For invalid URLs populate map without connection, create and print JSON error format*/
 	@Override
 	public Map<String, String> getHttpResponse(String theURL) {
 		String url, statusCode, contentLength, date = null;
@@ -64,7 +64,7 @@ public class HttpResponse implements HttpResponseService {
 					URL requestURL = new URL(theURL);
 					HttpURLConnection conn = (HttpURLConnection) requestURL.openConnection(); //connection
 					
-					// Handle unresponsive server
+					/* Handle unresponsive server*/
 					conn.setConnectTimeout(SERVER_TIMEOUT);
 					
 					url = conn.getURL().toString(); // URL
@@ -81,7 +81,7 @@ public class HttpResponse implements HttpResponseService {
 					map.put("Content_length", contentLength);
 					map.put("Date", date);
 					
-				// Populate statusCodeMap(1 key-value pair), seperate from other map(4 key-value pairs)
+				/* Populate statusCodeMap(1 key-value pair), seperate from other map(4 key-value pairs)*/
 				int counter = 1;
 				if (statusCodeMap.containsKey(statusCode)) {
 					counter = statusCodeMap.get(statusCode) + 1;
@@ -98,7 +98,7 @@ public class HttpResponse implements HttpResponseService {
 					printJSON("error",map); // map in JSON format
 				}
 		}
-		// Server timeout
+		/* Server timeout*/
 		catch (SocketTimeoutException e) {
 		    System.err.println("Server not responsive for :" + SERVER_TIMEOUT + " seconds.");
 		}
@@ -112,12 +112,12 @@ public class HttpResponse implements HttpResponseService {
 	}
 	
 	
-	// Gson framework for representation-required pattern
-	// Create gson instance with GsonBuilder to have some additional configuration
+	/* Gson framework for representation-required pattern
+	Create gson instance with GsonBuilder to have some additional configuration*/
 	@Override
 	public String printJSON(String print, Map map) {
 		GsonBuilder gsonBuilder = new GsonBuilder();
-		// setPrettyPrinting()- to print line by line
+		/* setPrettyPrinting()- to print line by line*/
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		String json = gson.toJson(map);
 		if (print == "error") {
@@ -127,9 +127,9 @@ public class HttpResponse implements HttpResponseService {
 		return json;
 	}
 
-	// statusCodeMap in form of {301,1},{200,2}
-	// sortedStatusCodeMap sorts above map by value {200,2},{301,1}
-	// finalStatusCodeMap is in form of {Status_code : 301, Number_of_responses : 1}
+	/* statusCodeMap in form of {301,1},{200,2}
+	sortedStatusCodeMap sorts above map by value {200,2},{301,1}
+	finalStatusCodeMap is in form of {Status_code : 301, Number_of_responses : 1}*/
 	@Override
 	public Map<String, Integer> getFinalStatusCodeMap() {
 		sortedStatusCodeMap = sortByValue(statusCodeMap);
@@ -140,25 +140,25 @@ public class HttpResponse implements HttpResponseService {
 		}
 		return finalStatusCodeMap;
 	}
-	// Another JSON format for counting responses
+	/* Another JSON format for counting responses*/
 	@Override
 	public String printJSON() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
-		// setPrettyPrinting()- to print line by line
+		/* setPrettyPrinting()- to print line by line*/
 		Gson gson = gsonBuilder.setPrettyPrinting().create();
 		String json = gson.toJson(finalStatusCodeMap);
 		System.out.println(json); // output written to stdout
 		return json;
 	}
 	
-	// Sort map by value for response count
+	/* Sort map by value for response count*/
 	private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap){
-		// Convert Map to List of Map
-		 List<Map.Entry<String, Integer>> list =
+		/* Convert Map to List of Map*/
+		List<Map.Entry<String, Integer>> list =
 	                new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
-		 // Sort list with Collections.sort(), provide a custom Comparator
-		 // Try switch the o1 o2 position for a different order
-		 Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+		/*  Sort list with Collections.sort(), provide a custom Comparator
+		Try switch the o1 o2 position for a different order*/
+		Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
 	            public int compare(Map.Entry<String, Integer> o1,
 	                               Map.Entry<String, Integer> o2) {
 	                return (o2.getValue()).compareTo(o1.getValue());

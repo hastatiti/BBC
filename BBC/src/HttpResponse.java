@@ -54,7 +54,7 @@ public class HttpResponse {
 
 	// Return a URLConnection instance, create connection with valid URLs, populate map, create and print JSON format
 	// For invalid URLs populate map without connection, create and print JSON error format
-	public void getHttpResponse(String theURL) {
+	public Map<String, String> getHttpResponse(String theURL) {
 		String url, statusCode, contentLength, date = null;
 		try {
 				if (isValidURL(theURL)) {
@@ -105,6 +105,7 @@ public class HttpResponse {
 			
 			printJSON("error"); // map in JSON format
 			}
+		return map;
 	}
 	
 	

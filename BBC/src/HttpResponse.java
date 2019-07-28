@@ -21,7 +21,7 @@ public class HttpResponse {
 	private Map<String, String> map = new LinkedHashMap<>();
 	private static int SERVER_TIMEOUT = 10000;
 	private static Map<String,Integer> statusCodeMap = new LinkedHashMap<>();
-	private static Map<String,Integer> sotredStatusCodeMap = new LinkedHashMap<>();
+	private static Map<String,Integer> sortedStatusCodeMap = new LinkedHashMap<>();
 	private Map<String,Integer> finalStatusCodeMap = new LinkedHashMap<>();
 	
 	// Starting point of the program
@@ -125,8 +125,8 @@ public class HttpResponse {
 	// statusCodeMap in form of {301,1},
 	// finalStatusCodeMap is in form of {Status_code : 301, Number_of_responses : 1}
 	public Map<String, Integer> getFinalStatusCodeMap() {
-		sotredStatusCodeMap = sortByValue(statusCodeMap);
-		for (Map.Entry me : sotredStatusCodeMap.entrySet()) {
+		sortedStatusCodeMap = sortByValue(statusCodeMap);
+		for (Map.Entry me : sortedStatusCodeMap.entrySet()) {
 			finalStatusCodeMap.put("Status_code", Integer.parseInt((String) me.getKey()));
 			finalStatusCodeMap.put("Number_of_responses", (Integer) me.getValue());
 			printJSON();
@@ -142,9 +142,13 @@ public class HttpResponse {
 		return json;
 	}
 	
+	// Sort map by value for response count
 	private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap){
+		// Convert Map to List of Map
 		 List<Map.Entry<String, Integer>> list =
 	                new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+		 // Sort list with Collections.sort(), provide a custom Comparator
+		 // Try switch the o1 o2 position for a different order
 		 Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
 	            public int compare(Map.Entry<String, Integer> o1,
 	                               Map.Entry<String, Integer> o2) {

@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 public class HttpResponseTest {
-	HttpResponse response;
+	HttpResponseService response;
 	
 	@Before
 	public void init() {

@@ -16,7 +16,7 @@ import java.util.TimeZone;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class HttpResponse {
+public class HttpResponse implements HttpResponseService {
 	
 	private Map<String, String> map = new LinkedHashMap<>(); // main map , 4 key/value pairs(URL,StatusCode,ContentLength,Date)
 	private static int SERVER_TIMEOUT = 10000;
@@ -25,6 +25,7 @@ public class HttpResponse {
 	private Map<String,Integer> finalStatusCodeMap = new LinkedHashMap<>(); // get key value from above map, {Status_code : 200, Number_of_responses : 3} ...
 	
 	// Starting point of the program
+	@Override
 	public void start() { 
 		System.out.println("Please press ENTER after the input : ");
 		System.out.println("Please press ctrl+D to see number of responses : ");
@@ -33,12 +34,13 @@ public class HttpResponse {
 		while (scanner.hasNextLine()) { // get URLs line by line
 			theURL = scanner.nextLine();
 			//send URLs to process one by one
-			HttpResponse response = new HttpResponse();
+			HttpResponseService response = new HttpResponse();
 			response.getHttpResponse(theURL);
 		}
 	}
 	
 	// Check validity of URLs
+	@Override
 	public boolean isValidURL(String theURL) {
 		try {
 			// Create a URL object from the String representation
@@ -54,6 +56,7 @@ public class HttpResponse {
 
 	// Return a URLConnection instance, create connection with valid URLs, populate map, create and print JSON format
 	// For invalid URLs populate map without connection, create and print JSON error format
+	@Override
 	public Map<String, String> getHttpResponse(String theURL) {
 		String url, statusCode, contentLength, date = null;
 		try {
@@ -111,6 +114,7 @@ public class HttpResponse {
 	
 	// Gson framework for representation-required pattern
 	// Create gson instance with GsonBuilder to have some additional configuration
+	@Override
 	public String printJSON(String print, Map map) {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		// setPrettyPrinting()- to print line by line
@@ -126,6 +130,7 @@ public class HttpResponse {
 	// statusCodeMap in form of {301,1},{200,2}
 	// sortedStatusCodeMap sorts above map by value {200,2},{301,1}
 	// finalStatusCodeMap is in form of {Status_code : 301, Number_of_responses : 1}
+	@Override
 	public Map<String, Integer> getFinalStatusCodeMap() {
 		sortedStatusCodeMap = sortByValue(statusCodeMap);
 		for (Map.Entry me : sortedStatusCodeMap.entrySet()) {
@@ -135,6 +140,8 @@ public class HttpResponse {
 		}
 		return finalStatusCodeMap;
 	}
+	// Another JSON format for counting responses
+	@Override
 	public String printJSON() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		// setPrettyPrinting()- to print line by line
@@ -165,7 +172,7 @@ public class HttpResponse {
 	}
 	
 	public static void main(String[] args) {
-		HttpResponse response = new HttpResponse();
+		HttpResponseService response = new HttpResponse();
 		response.start();
 		response.getFinalStatusCodeMap();
 	}

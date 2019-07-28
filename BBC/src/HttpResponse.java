@@ -61,10 +61,9 @@ public class HttpResponse {
 					int counter = 1;
 					
 					if(statusCodeMap.containsKey(statusCode)) {
-						int i =1;
 						System.out.println("yessss");
-						i = statusCodeMap.get(statusCode) +1;
-					statusCodeMap.put(statusCode, i);
+						counter = statusCodeMap.get(statusCode) +1;
+					statusCodeMap.put(statusCode, counter);
 					}else {
 						System.out.println("hep burda");
 						statusCodeMap.put(statusCode, counter);

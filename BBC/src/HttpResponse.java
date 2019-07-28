@@ -16,6 +16,7 @@ public class HttpResponse {
 	
 	private Map<String, String> map = new LinkedHashMap<>();
 	private static int SERVER_TIMEOUT = 10000;
+	private static Map<String,Integer> statusCodeMap = new LinkedHashMap<>();
 	
 	// Check validity of URLs
 	public boolean isValidURL(String theURL) {
@@ -57,12 +58,26 @@ public class HttpResponse {
 					map.put("Content_length", contentLength);
 					map.put("Date", date);
 					
-					printJSON("notError"); // map in JSON format
+					int counter = 1;
+					
+					if(statusCodeMap.containsKey(statusCode)) {
+						int i =1;
+						System.out.println("yessss");
+						i = statusCodeMap.get(statusCode) +1;
+					statusCodeMap.put(statusCode, i);
+					}else {
+						System.out.println("hep burda");
+						statusCodeMap.put(statusCode, counter);
+					}
+					
+					printJSON();
+					
+				//	printJSON("notError"); // map in JSON format
 				}else {
 					map.put("Url", theURL.trim());
 					map.put("Error", "invalid url");
 					
-					printJSON("error"); // map in JSON format
+				//	printJSON("error"); // map in JSON format
 				}
 		}
 		// Server timeout
@@ -76,6 +91,15 @@ public class HttpResponse {
 			printJSON("error"); // map in JSON format
 			}
 	}
+	
+	public String printJSON() {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		Gson gson = gsonBuilder.setPrettyPrinting().create();
+		String json = gson.toJson(statusCodeMap);
+		System.out.println(json); 
+		return json;
+	}
+
 	
 	// Gson framework for representation-required pattern
 	// Create gson instance with GsonBuilder to have some additional configuration

@@ -58,17 +58,14 @@ public class HttpResponse {
 					map.put("Content_length", contentLength);
 					map.put("Date", date);
 					
-					int counter = 1;
 					
-					if(statusCodeMap.containsKey(statusCode)) {
-						System.out.println("yessss");
-						counter = statusCodeMap.get(statusCode) +1;
+				int counter = 1;
+				if (statusCodeMap.containsKey(statusCode)) {
+					counter = statusCodeMap.get(statusCode) + 1;
 					statusCodeMap.put(statusCode, counter);
-					}else {
-						System.out.println("hep burda");
-						statusCodeMap.put(statusCode, counter);
-					}
-					
+				} else
+					statusCodeMap.put(statusCode, counter);
+
 					printJSON();
 					
 				//	printJSON("notError"); // map in JSON format
@@ -113,15 +110,19 @@ public class HttpResponse {
 			System.out.println(json); // output written to stdout
 		return json;
 	}
-	
-	public static void main(String[] args) {
+	public void start() {
 		System.out.println("Please press ENTER after the input : ");
 		Scanner scanner = new Scanner(System.in);
 		String theURL = null;
 		while (scanner.hasNextLine()) {
 			theURL = scanner.nextLine();
-			HttpResponse response = new HttpResponse();
-			response.getHttpResponse(theURL);
+			//send URLs to process
+			getHttpResponse(theURL);
 		}
+	}
+	
+	public static void main(String[] args) {
+		HttpResponse response = new HttpResponse();
+		response.start();
 	}
 }

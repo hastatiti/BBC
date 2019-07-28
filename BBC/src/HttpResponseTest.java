@@ -1,4 +1,5 @@
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -39,5 +40,21 @@ public class HttpResponseTest {
 		assertThat(actual, IsMapContaining.hasEntry("Content_length","185"));
 		assertThat(actual, IsMapContaining.hasKey("Url"));
 		assertThat(expected, is(actual));
+	}
+	
+	@Test
+	void printJSONMustReturnRequiredFormat() {
+		Map<String,String> actual = new HttpResponse().getHttpResponse("http://www.bbc.co.uk/iplayer");
+		Map<String, String> expected = new LinkedHashMap<>();
+		expected.put("Url", "http://www.bbc.co.uk/iplayer");
+		expected.put("Status_Code", "301");
+		expected.put("Content_length", "185");
+		String date = actual.get("Date");
+		expected.put("Date", date);
+		
+		String s1 = new HttpResponse().printJSON("notError",actual);
+		String s2 = new HttpResponse().printJSON("notError",expected);
+		
+		assertEquals(s1, s2);
 	}
 }

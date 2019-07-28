@@ -87,12 +87,12 @@ public class HttpResponse {
 					statusCodeMap.put(statusCode, counter); // End of statusCodeMap
 
 					
-					printJSON("notError"); // main map in JSON format
+					printJSON("notError",map); // main map in JSON format
 				}else {
 					map.put("Url", theURL.trim());
 					map.put("Error", "invalid url");
 					
-					printJSON("error"); // map in JSON format
+					printJSON("error",map); // map in JSON format
 				}
 		}
 		// Server timeout
@@ -103,7 +103,7 @@ public class HttpResponse {
 			map.put("Url", theURL.trim());
 			map.put("Error", "invalid url");
 			
-			printJSON("error"); // map in JSON format
+			printJSON("error",map); // map in JSON format
 			}
 		return map;
 	}
@@ -111,7 +111,7 @@ public class HttpResponse {
 	
 	// Gson framework for representation-required pattern
 	// Create gson instance with GsonBuilder to have some additional configuration
-	public String printJSON(String print) {
+	public String printJSON(String print, Map map) {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		// setPrettyPrinting()- to print line by line
 		Gson gson = gsonBuilder.setPrettyPrinting().create();

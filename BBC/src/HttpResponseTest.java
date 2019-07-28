@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.hamcrest.collection.IsMapContaining;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
@@ -25,14 +26,18 @@ public class HttpResponseTest {
 	}
 	@Test
 	void getHttpResponseMustPopulateMap() {
-		Map<String,String> map = new HttpResponse().getHttpResponse("http://www.bbc.co.uk/iplayer");
+		Map<String,String> actual = new HttpResponse().getHttpResponse("http://www.bbc.co.uk/iplayer");
 		Map<String, String> expected = new LinkedHashMap<>();
 		expected.put("Url", "http://www.bbc.co.uk/iplayer");
 		expected.put("Status_Code", "301");
 		expected.put("Content_length", "185");
-		String date = map.get("Date");
+		String date = actual.get("Date");
 		expected.put("Date", date);
 	
 		assertThat(expected.size(), is(4));
+		assertThat(actual, IsMapContaining.hasEntry("Status_Code","301"));
+		assertThat(actual, IsMapContaining.hasEntry("Content_length","185"));
+		assertThat(actual, IsMapContaining.hasKey("Url"));
+		assertThat(expected, is(actual));
 	}
 }

@@ -12,5 +12,23 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="/Users/ady/.m2/repository/org/hamcrest/java-hamcrest/2.0.0.0/java-hamcrest-2.0.0.0.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.hamcrest"/>
+			<attribute name="maven.artifactId" value="java-hamcrest"/>
+			<attribute name="maven.version" value="2.0.0.0"/>
+			<attribute name="maven.scope" value="test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/ady/.m2/repository/org/hamcrest/hamcrest-library/1.3/hamcrest-library-1.3.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.hamcrest"/>
+			<attribute name="maven.artifactId" value="hamcrest-library"/>
+			<attribute name="maven.version" value="1.3"/>
+			<attribute name="maven.scope" value="test"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

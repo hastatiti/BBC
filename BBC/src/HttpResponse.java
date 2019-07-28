@@ -18,11 +18,11 @@ import com.google.gson.GsonBuilder;
 
 public class HttpResponse {
 	
-	private Map<String, String> map = new LinkedHashMap<>();
+	private Map<String, String> map = new LinkedHashMap<>(); // main map , 4 key/value pairs(URL,StatusCode,ContentLength,Date)
 	private static int SERVER_TIMEOUT = 10000;
-	private static Map<String,Integer> statusCodeMap = new LinkedHashMap<>();
-	private static Map<String,Integer> sortedStatusCodeMap = new LinkedHashMap<>();
-	private Map<String,Integer> finalStatusCodeMap = new LinkedHashMap<>();
+	private static Map<String,Integer> statusCodeMap = new LinkedHashMap<>(); // counting responses, {301,2}, {200,3} ...
+	private Map<String,Integer> sortedStatusCodeMap = new LinkedHashMap<>(); // sort above map by value 
+	private Map<String,Integer> finalStatusCodeMap = new LinkedHashMap<>(); // get key value from above map, {Status_code : 200, Number_of_responses : 3} ...
 	
 	// Starting point of the program
 	public void start() { 
